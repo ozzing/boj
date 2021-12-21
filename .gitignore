@@ -1,5 +1,5 @@
 # exe
 *.exe
 
-# tasks.json
-tasks.json
+# .json
+*.json
