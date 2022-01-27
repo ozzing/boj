@@ -29,7 +29,7 @@ int main(){
 
     int start=0, end=0, sum=0, cnt=0;
     while(1){
-        if(sum<n){
+        if(sum>=n){
             sum -= prime[end++];
         }
         else if(start==prime.size()) break;
