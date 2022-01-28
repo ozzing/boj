@@ -22,7 +22,7 @@ int main(){
         for(int i=1;i<n/2;i++){
             int tmp = 2*i+1;
             if(is_prime(tmp) && is_prime(n-tmp)){
-                printf("%d = %d + %d\n", n, a, b);
+                printf("%d = %d + %d\n", n, tmp, n-tmp);
                 check=true;
                 break;
             }
