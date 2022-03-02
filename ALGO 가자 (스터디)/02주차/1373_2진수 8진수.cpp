@@ -4,24 +4,15 @@
 using namespace std;
 
 int main(){
-    bool check=false;
-    int val=0, two=1;
-    string str, ans="";
+    string str;
     cin >> str;
-    for(int i=str.size()-1;i>=0;i--){
-        if(str[i]=='1') {
-            val+=two;
-            check=true;
-        }
-        two*=2;
-        if(two==8){
-            ans+=to_string(val);
-            two=1;
-            val=0;
-        }
+
+    while(str.length()%3!=0){
+        str = '0' + str;
     }
-    if(val==0 && check){}
-    else ans+=to_string(val);
-    reverse(ans.begin(), ans.end());
-    cout << ans;
+
+    for(int i=0;i<str.length();i+=3){
+        int val = (str[i]-'0')*4 + (str[i+1]-'0')*2 + (str[i+2]-'0')*1;
+        cout << val;
+    }
 }
