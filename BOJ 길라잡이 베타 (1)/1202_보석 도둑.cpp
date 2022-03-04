@@ -9,7 +9,8 @@ priority_queue<long long> pq;
 
 int main(){
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL); cout.tie(NULL);
+    cin.tie(NULL);
+    cout.tie(NULL);
 
     vector<pair<int, int>> q;
     vector<int> w;
