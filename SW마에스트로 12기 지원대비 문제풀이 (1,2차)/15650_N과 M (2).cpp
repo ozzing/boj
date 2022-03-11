@@ -16,11 +16,11 @@ void solve(int depth){
         return;
     }
     for(int i=1;i<=n;i++){
-        bool check=false;
+        bool check=true;
         for(int j=0;j<depth;j++){
-            if(arr[j]==i) check = true;
+            if(arr[j]>=i) check = false;
         }
-        if(!check){
+        if(check){
             arr[depth]=i;
             solve(depth+1);
         }
@@ -29,6 +29,5 @@ void solve(int depth){
 
 int main(){
     cin >> n >> m;
-
     solve(0);
 }

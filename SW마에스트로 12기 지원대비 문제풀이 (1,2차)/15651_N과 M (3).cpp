@@ -15,15 +15,9 @@ void solve(int depth){
         cout << "\n";
         return;
     }
-    for(int i=1;i<=n;i++){
-        bool check=false;
-        for(int j=0;j<depth;j++){
-            if(arr[j]==i) check = true;
-        }
-        if(!check){
-            arr[depth]=i;
-            solve(depth+1);
-        }
+    for(int i=1;i<=n;i++){  
+        arr[depth]=i;
+        solve(depth+1);
     }
 }
 
