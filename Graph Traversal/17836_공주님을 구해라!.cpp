@@ -19,36 +19,35 @@ int main(){
         }
     }
  
-    queue<pair<pair<int,int>,bool>> q;
+    queue<pair<pair<int,int>,pair<int,int>>> q;
     
     visited[0][0][0]=true;
-    q.push({{0,0}, false});
-    
-    for(int time=0;time<=t;time++){
-        int size=q.size();
-        for(int s=0;s<size;s++){
-            int x=q.front().first.first;
-            int y=q.front().first.second;
-            int k=q.front().second;
-            q.pop();
-            if(x==n-1 && y==m-1){
-                cout << time;
-                return 0;
-            }
+    q.push({{0,0}, {0, 0}});
 
-            for(int i=0;i<4;i++){
-                int nx=x+dx[i];
-                int ny=y+dy[i];
-                if(nx<0||nx>=n||ny<0||ny>=m) continue;
-                if(!visited[nx][ny][1] && (map[nx][ny]=='2'||k==true)){
-                    visited[x][y][1]=true;
-                    q.push({{nx, ny}, true});
-                }
-                else{
-                    if (!visited[nx][ny][0] && map[nx][ny]=='0') {
-                        visited[x][y][0]=true;
-                        q.push({{nx, ny}, false});
-                    }
+    while(!q.empty()){
+        int x=q.front().first.first;
+        int y=q.front().first.second;
+        int k=q.front().second.first;
+        int time=q.front().second.second;
+        q.pop();
+        if(x==n-1 && y==m-1){
+            cout << time;
+            return 0;
+        }
+        if(time>t) continue;
+        
+        for(int i=0;i<4;i++){
+            int nx=x+dx[i];
+            int ny=y+dy[i];
+            if(nx<0||nx>=n||ny<0||ny>=m) continue;
+            if(!visited[nx][ny][1] && (map[nx][ny]=='2'||k==true)){
+                visited[x][y][1]=true;
+                q.push({{nx, ny}, {1, time+1}});
+            }
+            else{
+                if (!visited[nx][ny][0] && map[nx][ny]=='0') {
+                    visited[x][y][0]=true;
+                    q.push({{nx, ny}, {0, time+1}});
                 }
             }
         }
