@@ -16,7 +16,6 @@ void bfs(){
         int x = q.front().first;
         int y = q.front().second;
         q.pop();
-        int tmp=cnt;
         for(int d=0;d<6;d++){
             int nx = x+dx[d];
             int ny = y+dy[d];
