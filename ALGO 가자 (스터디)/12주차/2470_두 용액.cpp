@@ -2,16 +2,29 @@
 #include <vector>
 #include <algorithm>
 #include <cmath>
-#include <cstring>
 using namespace std;
 
-#define SWAP(a,b) {int t; t=a; a=b; b=t;}
+int n, tmp;
+long long mini, sum;
+vector<long long> sol;
+int fir, sec;
 
-int n, tmp, res, cnt, sum;
-int num[2];
-int ans[2];
-vector<int> sol;
-vector<int> permu;
+void binary_search(){
+    int start=0;
+    int end=n-1;
+
+    while(start<end){
+        sum=sol[start]+sol[end];
+        if(llabs(sum)<mini){
+            mini=llabs(sum);
+            fir=start;
+            sec=end;
+        }
+        if(sum<0) start++;
+        else end--;
+    }
+
+}
 
 int main(){
     ios::sync_with_stdio(0);
@@ -22,31 +35,10 @@ int main(){
         cin >> tmp;
         sol.push_back(tmp);
     }
-    for(int i=0;i<2;i++) permu.push_back(1);
-    for(int i=2;i<n;i++) permu.push_back(0);
-    sort(permu.begin(), permu.end());
+    sort(sol.begin(), sol.end());
 
-    res=0xffff;
-    do{
-        sum=0;
-        cnt=0;
-        for(int i=0;i<n;i++){
-            if(permu[i]==1){
-                sum+=sol[i];
-                num[cnt++]=sol[i];
-            }
-        }
+    mini=__LONG_LONG_MAX__;
+    binary_search();
 
-        if(abs(res)>abs(sum)){
-            res=sum;
-            for(int i=0;i<2;i++){
-                ans[i]=num[i];
-            }
-        }
-        memset(num, 0, sizeof(num));
-
-    } while(next_permutation(permu.begin(), permu.end()));
-    
-    if(ans[0]>ans[1]) SWAP(ans[0], ans[1]);
-    cout << ans[0] << " " << ans[1];
+    cout << sol[fir] << " " << sol[sec];
 }
