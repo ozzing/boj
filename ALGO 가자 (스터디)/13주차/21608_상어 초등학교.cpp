@@ -1,49 +1,75 @@
 #include <iostream>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
+#define MAX 25
 int n;
-int stu[405];
-int like[405][4];
-int seat[21][21];
+int stu[MAX*MAX];
+int like[MAX*MAX][4];
+int seat[MAX][MAX];
 
 int dx[4]={-1, 0, 0, 1};
 int dy[4]={0, -1, 1, 0};
 
+struct ST{
+    int x;
+    int y;
+    int cnt;
+    int likes;
+};
+
+bool compare(ST A, ST B)
+{
+    if (A.likes >= B.likes){
+        if (A.likes == B.likes){
+            if (A.cnt >= B.cnt){
+                if (A.cnt == B.cnt){
+                    if (A.x <= B.x){
+                        if (A.x == B.x){
+                            if (A.y < B.y){
+                                return true;
+                            }
+                            return false;
+                        }
+                        return true;
+                    }
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
+        return true;
+    }
+    return false;
+}
 
 void sit(){
     for(int s=0;s<n*n;s++){
-        int fx, fy, cmax=-1, lmax=-1;
+        int likes, cnt;
+        vector<ST> vec;
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
-                int cnt=0, likes=0;
+                likes=0; cnt=0;
                 if(seat[i][j]==0){
                     for(int d=0;d<4;d++){
                         int nx=i+dx[d];
                         int ny=j+dy[d];
                         if(nx<0 || nx>=n || ny<0 || ny>=n) continue;
-                        if(seat[nx][ny]){
-                            for(int k=0;k<4;k++){
-                                if(seat[nx][ny]==like[stu[s]][k]){
-                                    likes++;
-                                }
-                            }
-                        }
-                        else if(!seat[nx][ny]){
-                            cnt++;
+                        for(int k=0;k<4;k++){
+                            if(seat[nx][ny]==like[stu[s]][k]) likes++;
+                            else if(!seat[nx][ny]) cnt++;
                         }
                     }
-
-                    if(likes>lmax){
-                        lmax=likes;
-                        fx=i; fy=j;
-                    }
-                    if(lmax==likes && cnt>cmax){
-                        cmax=cnt;
-                        fx=i; fy=j;
-                    }
+                    vec.push_back({i, j, cnt, likes});
                 }
             }
         }
+
+        sort(vec.begin(), vec.end(), compare);
+        int fx=vec[0].x;
+        int fy=vec[0].y;
         seat[fx][fy]=stu[s];
     }
 }
@@ -84,5 +110,5 @@ int main(){
             else if (likes==4) total+=1000;
         }
     }
-    cout << total << "\n";
+    cout << total;
 }
